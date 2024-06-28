@@ -1,0 +1,25 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center" style="max-width: 25rem; width: 100%;">
+        <h1 class="mb-5">Sign In</h1>
+
+        <%= form_with url: signin_path do |form| %>
+            <% if flash[:alert] %>
+                <div class="alert alert-warning"><%= flash[:alert] %></div>
+            <% end %>
+
+            <div class="mb-3">
+                <%= form.label :email, class: "form-label" %>
+                <%= form.text_field :email, class: "form-control text-center", placeholder: "matthews@example.com" %>
+            </div>
+
+            <div class="mb-3">
+                <%= form.label :password, class: "form-label" %>
+                <%= form.password_field :password, class: "form-control text-center", placeholder: "password" %>
+            </div>
+
+            <div class="d-grid gap-2 pt-5">
+                <%= form.submit "Sign In", class: "btn btn-primary mt-4" %>
+            </div>
+        <% end %>
+    </div>
+</div>
