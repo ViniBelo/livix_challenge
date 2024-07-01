@@ -1,0 +1,49 @@
+<div class="text-center">
+    <% if @user.errors.any? %>
+        <% @user.errors.full_messages.each do |message| %>
+            <div class="alert alert-warning"><%= message %></div>
+        <% end %>
+    <% end %>
+</div>
+<div class="container d-flex justify-content-center">
+    <div class="column m-5 text-center border" style="max-width: 50rem; width: 100%;">
+        <h1 class="m-3">Users to transfer money!</h1>
+        <% @users.each do |user| %>
+            <% unless @user == user %>
+                <div class="m-3">
+                    <%= user.name %> - <%= user.email %>, <%= number_to_currency(user.balance, unit: "US$", precision: 2) %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="column m-5 text-center border" style="max-width: 50rem; width: 100%;">
+        <div class="m-3">
+            <h1>Balance: <%= number_to_currency(@user.balance, unit: "US$", precision: 2) %></h1>
+        </div>
+        <%= form_with url: user_deposit_path(@user.id), method: :put do |deposit_form| %>
+            <div class="m-3">
+                <%= deposit_form.label "amount to deposit", class: "form-label" %>
+                <%= deposit_form.text_field "amount", class: "form-control text-center", placeholder: "$200.00" %>
+            </div>
+            <div class="m-3 d-grid gap-2">
+                <%= deposit_form.submit "Deposit", class: "btn btn-success" %>
+            </div>
+        <% end %>
+
+        <%= form_with url: user_send_path, method: :put do |send_form| %>
+            <div class="row m-3">
+                <div class="col md-6">
+                    <%= send_form.label "User to send money", class: "form-label" %>
+                    <%= send_form.text_field "receiver", class: "form-control text-center", placeholder: "matthews@example.com" %>
+                </div>
+                <div class="col md-6">
+                    <%= send_form.label "Amount to send", class: "form-label" %>
+                    <%= send_form.text_field "amount", class: "form-control text-center", placeholder: "$200.00" %>
+                </div>
+            </div>
+            <div class="m-3 d-grid gap-2">
+                <%= send_form.submit "Send", class: "btn btn-success" %>
+            </div>
+        <% end %>
+    </div>
+</div>
