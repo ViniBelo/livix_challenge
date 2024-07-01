@@ -8,7 +8,6 @@ class UserDetail < ApplicationRecord
 
     if receiver = User.find_by(email: receiver_email)
       receiver_details = UserDetail.find_by(user_id: receiver.id)
-      puts receiver_details
       if sender_balance >= amount
         self.update(balance: (sender_balance - amount).to_f)
         receiver_details.update(balance: (receiver_details.balance + amount).to_f)

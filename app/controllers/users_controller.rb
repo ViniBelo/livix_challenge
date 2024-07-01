@@ -1,11 +1,23 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:index, :deposit, :send_money]
+  before_action :set_user, only: [:index, :update, :deposit, :send_money]
 
   def index
     if @user
       @users = User.all
     else
       redirect_to signin_path
+    end
+  end
+
+  def edit
+    set_user
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to root_path, notice: "Profile updated successfully!"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -24,10 +36,10 @@ class UsersController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @user.user_detail.transfer(params[:receiver], amount)
-      raise ActiveRecord::Rollback unless @user.errors.empty?
+      raise ActiveRecord::Rollback unless @user.user_detail.errors.empty?
     end
 
-    if @user.errors.empty?
+    if @user.user_detail.errors.empty?
       redirect_to root_path
     else
       @users = User.all
@@ -40,5 +52,9 @@ class UsersController < ApplicationController
       if session[:user_id]
         @user = User.find_by(id: session[:user_id])
       end
+    end
+
+    def user_params
+      params.required(:user).permit(:name, :email, :password, :password_confirmation, user_detail_attributes: [:name])
     end
 end

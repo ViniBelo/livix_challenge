@@ -1,11 +1,13 @@
 <div class="text-center">
-    <% if @user.errors.any? %>
-        <% @user.errors.full_messages.each do |message| %>
+    <% if @user.user_detail.errors.any? %>
+        <% @user.user_detail.errors.full_messages.each do |message| %>
             <div class="alert alert-warning"><%= message %></div>
         <% end %>
     <% end %>
     <div class="container d-flex justify-content-between align-items-center mt-5">
         <h1 class="flex-grow-1">Hello <%= @user.user_detail.name %>!</h1>
+        <%= link_to "Edit", edit_user_path(@user), class: "btn btn-lg btn-primary", style: "margin-right: 1rem;" %>
+        <%= button_to "Logout", logout_path, class: "btn btn-lg btn-danger", method: :delete %>
     </div>
 </div>
 <div class="container d-flex justify-content-center">
