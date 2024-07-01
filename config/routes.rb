@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get "signin", to: "sessions#new"
   post "signin", to: "sessions#create"
 
-  get "user", to: "users#index"
-  put "user/deposit", to: "users#deposit", as: "user_deposit"
-  put "user/send", to: "users#send_money", as: "user_send"
+  resources :users do
+    resources :user_details
+  end
+  put "funds/deposit", to: "users#deposit", as: "funds_deposit"
+  put "funds/send", to: "users#send_money", as: "funds_send"
 end

@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     amount = params[:amount].to_r
 
     ActiveRecord::Base.transaction do
-      user.deposit(amount)
+      user.user_detail.deposit(amount)
     end
     redirect_to root_path
   end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     amount = params[:amount].to_r
 
     ActiveRecord::Base.transaction do
-      @user.transfer(params[:receiver], amount)
+      @user.user_detail.transfer(params[:receiver], amount)
       raise ActiveRecord::Rollback unless @user.errors.empty?
     end
 
