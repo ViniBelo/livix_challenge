@@ -19,7 +19,6 @@ class UserDetail < ApplicationRecord
     end
   end
 
-
   def deposit(amount)
     balance = self.balance.to_r
     self.update(balance: (balance + amount).to_f)
