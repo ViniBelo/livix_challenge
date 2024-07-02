@@ -21,6 +21,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    set_user
+    @user.destroy
+    session[:user_id] = nil
+    redirect_to signin_path
+  end
+
   def deposit
     user = User.find_by(id: session[:user_id])
     amount = params[:amount].to_r

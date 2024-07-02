@@ -35,6 +35,10 @@
 
             <div class="d-grid gap-2 pt-5">
                 <%= form.submit "Save", class: "btn btn-primary mt-4" %>
+                <%= link_to "Delete", user_path(@user), class: "btn btn-danger mt-2", data: {
+                                    turbo_method: :delete,
+                                    turbo_confirm: "Do you really want to delete your account?"
+                                } %>
             </div>
         <% end %>
     </div>
