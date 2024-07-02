@@ -2,15 +2,13 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:index, :update, :deposit, :send_money]
 
   def index
-    if @user
-      @users = User.all
-    else
-      redirect_to signin_path
-    end
+    set_user
+    check_session
   end
 
   def edit
     set_user
+    check_session
   end
 
   def update
@@ -58,6 +56,14 @@ class UsersController < ApplicationController
     def set_user
       if session[:user_id]
         @user = User.find_by(id: session[:user_id])
+      end
+    end
+
+    def check_session
+      if @user
+        @users = User.all
+      else
+        redirect_to signin_path
       end
     end
 
