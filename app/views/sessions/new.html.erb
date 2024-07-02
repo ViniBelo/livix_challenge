@@ -17,6 +17,8 @@
                 <%= form.password_field :password, class: "form-control text-center", placeholder: "password" %>
             </div>
 
+            <p>Don't you have an account? <%= link_to "Click here", signup_path %> to sign up</p>
+
             <div class="d-grid gap-2 pt-5">
                 <%= form.submit "Sign In", class: "btn btn-primary mt-4" %>
             </div>
