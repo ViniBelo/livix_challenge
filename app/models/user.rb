@@ -5,5 +5,6 @@ class User < ApplicationRecord
 
   VALID_EMAIL_REGEX = /\A[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\z/
 
-  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX, message: "must be a valid email address!" }, uniqueness: true
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX, message: 'must be a valid email address!' },
+                    uniqueness: true
 end

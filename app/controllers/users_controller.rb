@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:index, :update, :deposit, :send_money]
+  before_action :set_user, only: %i[index update deposit send_money]
 
   def index
     set_user
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to root_path, notice: "Profile updated successfully!"
+      redirect_to root_path, notice: 'Profile updated successfully!'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -53,21 +53,23 @@ class UsersController < ApplicationController
   end
 
   private
-    def set_user
-      if session[:user_id]
-        @user = User.find_by(id: session[:user_id])
-      end
-    end
 
-    def check_session
-      if @user
-        @users = User.all
-      else
-        redirect_to signin_path
-      end
-    end
+  def set_user
+    return unless session[:user_id]
 
-    def user_params
-      params.required(:user).permit(:name, :email, :password, :password_confirmation, user_detail_attributes: [:id, :name])
+    @user = User.find_by(id: session[:user_id])
+  end
+
+  def check_session
+    if @user
+      @users = User.all
+    else
+      redirect_to signin_path
     end
+  end
+
+  def user_params
+    params.required(:user).permit(:name, :email, :password, :password_confirmation,
+                                  user_detail_attributes: %i[id name])
+  end
 end
